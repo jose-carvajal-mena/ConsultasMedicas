@@ -1,0 +1,137 @@
+{% extends './base.html' %}
+{% block title %} Medicos {% endblock %}
+
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <h3>
+          Consultas Medicas
+          <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" class="btn btn-primary float-right"><i class="fa-solid fa-plus"></i> Agregar</button>
+        </h3>
+       </div>
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">N°</th>
+        <th scope="col">MEDICO</th>
+        <th scope="col">TIPO</th>
+        <th scope="col">ESTADO</th>
+        <th scope="col">OBSERVACION</th>
+        <th scope="col">OPCIONES</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for consulta in consultas %}
+        {% if consulta[5] != 0%}
+          <tr>
+        
+          <td>{{ consulta[0] }}</td>
+          {% for medico in medicos %}
+            {% if medico[0] == consulta[1] %}
+            <td>{{ medico[1]|capitalize+' '+medico[2]|capitalize+' '+medico[3]|capitalize }}</td>
+            {% endif %}
+          {% endfor %}
+
+          {% for tipo in tipos %}
+            {% if tipo[0] == consulta[2] %}
+            <td>{{ tipo[1] }}</td> 
+            {% endif %}
+          {% endfor %}
+          
+          {% for estado in estados %}
+            {% if estado[0] == consulta[3] %}
+            {% if consulta[3] == 1 %}
+            <td class="text-warning font-weight-bold">{{ estado[1] }}</td>
+            {% elif consulta[3] == 2 %}
+            <td class="text-danger  font-weight-bold">{{ estado[1] }}</td>
+            {% elif consulta[3] == 3 %}
+            <td class="text-success  font-weight-bold">{{ estado[1] }}</td>
+            {% endif %}
+            
+            {% endif %}
+          {% endfor %}
+          
+          <td>{{ consulta[4] | capitalize}}</td>
+      
+          <td colspan="2">
+            <a href="/editar-consulta/{{ consulta[0] }}" class="btn btn-success text-light" ><i class="fa-solid fa-pen"></i></a>
+            <a href="/eliminar-consulta/{{ consulta[0] }}" class="btn btn-danger text-light"><i class="fa-solid fa-trash"></i></a>
+        </td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+      
+    </tbody>
+  </table>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-user-doctor fa-x4"></i> Nuevo Consulta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/guardar-consulta" method="POST">
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="run" class="col-form-label">R.U.N MEDICO</label>
+              <select id="medicos" class="datos" name="run" style="width:100%;">
+                {% for medico in medicos %}
+                      <option value="{{ medico[0] }}">
+                          {{medico[0] +' ('+ medico[1] +' '+ medico[2] +' '+ medico[3]+')'}}
+                      </option>
+                  {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="tipo" class="col-form-label">TIPO CONSULTA</label><br>
+              <select id="tipo" class="datos " name="tipo" style="width:235px;">
+                {% for tipo in tipos %}
+                      <option value="{{ tipo[0] }}">
+                          {{tipo[1]}}
+                      </option>
+                  {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="col">
+              <div class="form-group">
+                <label for="estado" class="col-form-label">ESTADO CONSULTA</label><br>
+                <select id="estado" class="datos" name="estado" style="width:200px;">
+                  {% for estado in estados %}
+                        <option value="{{ estado[0] }}">
+                            {{estado[1]}}
+                        </option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col">
+          <div class="form-group">
+              <label for="observacion" class="col-form-label">OBSERVACION</label><br>
+              <textarea class="form-control" id="observacion" rows="3" name="observacion"></textarea>
+          </div>
+        </div>
+        </div>
+          </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+ 
+{% endblock%}

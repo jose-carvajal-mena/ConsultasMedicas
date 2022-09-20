@@ -1,0 +1,74 @@
+{% extends './base.html' %}
+{% block title %}Nueva Consulta{% endblock %}
+
+{% block body %}
+<form action="/nueva_atencion" method="POST">
+    
+    <div class="row">
+      <div class="col">
+          <div class="form-group">
+              <label for="run" class="col-form-label">R.U.N</label>
+              <select id="medicos" class="datos form-control" name="medico" >
+                {% for medico in medicos %}
+                      <option value="{{ medico[0] }}">
+                          {{medico[0]+' '+ medico[1]+' '+ medico[2] +' '+ medico[3] }}
+                      </option>
+                 {% endfor %}
+              </select>>
+          </div>
+      </div>
+      <div class="col">
+          <div class="form-group">
+              <label for="tipo" class="col-form-label">TIPO CONSULTA</label>
+              <select id="tipo" class="datos form-control" name="tipo" >
+                {% for tipo in tipos %}
+                      <option value="{{ tipo[0] }}">
+                          {{tipo[1]}}
+                      </option>
+                 {% endfor %}
+              </select>>
+          </div>
+      </div>
+     </div>
+      <div class="row">
+          <div class="col">
+              <div class="form-group">
+                  <label for="estado" class="col-form-label">ESTADO CONSULTA</label>
+                  <select id="estado" class="datos form-control" name="estado" >
+                    {% for estado in estados %}
+                          <option value="{{ estado[0] }}">
+                              {{estado[1]}}
+                          </option>
+                     {% endfor %}
+                  </select>>
+              </div>
+          </div>
+          <div class="col">
+              <div class="form-group">
+                  <label for="materno" class="col-form-label">APELLIDO MATERNO</label>
+                  <input type="text" class="form-control" id="materno" name="materno" value="{{ paciente[3] }}">
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col">
+              <div class="form-group">
+                  <label for="medicos" class="col-form-label">MEDICO</label><br>
+                  <select id="medicos" class="datos form-control" name="medico" >
+                      {% for medico in medicos %}
+                            <option value="{{ medico[0] }}">
+                                {{ medico[1]+' '+ medico[2] +' '+ medico[3] }}
+                            </option>
+                       {% endfor %}
+                    </select>
+              </div>
+          </div>
+      </div>
+</div>
+<div class="">
+  <button type="button" class="btn btn-danger">Cancelar</button>
+  <button type="submit" class="btn btn-primary">Guardar</button>
+</div>
+
+</form>
+{% endblock %}

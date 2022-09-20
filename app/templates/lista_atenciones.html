@@ -1,0 +1,59 @@
+{% extends './base.html' %}
+{% block title %} Medicos {% endblock %}
+
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <h3>
+          Lista Recepciones
+        </h3>
+       </div>
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">N° RECEPCION</th>
+        <th scope="col">N° CONSULTA</th>
+        <th scope="col">PACIENTE</th>
+        <th scope="col">FECHA</th>
+        <th scope="col">HORA</th>
+        <th scope="col">VALOR CONSULTA</th>
+        <th scope="col">OBSERVACION</th>
+        <th scope="col">PRIORIDAD</th>
+        <th scope="col">OPCIONES</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for atencion in atenciones %}
+        
+          <tr>
+        
+          <td>{{ atencion[0] }}</td>
+          <td>{{ atencion[1] }}</td>
+          {% for paciente in pacientes %}
+            {% if paciente[0] == atencion[2] %}
+            <td>{{ paciente[1]|capitalize+' '+paciente[2]|capitalize+' '+paciente[3]|capitalize }}</td>
+            {% endif %}
+          {% endfor %}
+
+          
+          
+          <td>{{ atencion[3]}}</td>
+          <td>{{ atencion[4]}}</td>
+          <td>{{ atencion[5]}}</td>
+          <td>{{ atencion[6]}}</td>
+          <td>{{ atencion[7]}}</td>
+      
+          <td colspan="2">
+            <a href="/editar-atencion/{{ atencion[0] }}" class="btn btn-success text-light" ><i class="fa-solid fa-pen"></i></a>
+            <a href="/eliminar-atencion/{{ atencion[0] }}" class="btn btn-danger text-light"><i class="fa-solid fa-trash"></i></a>
+        </td>
+        </tr>
+    {% endfor %}
+      
+    </tbody>
+  </table>
+</div>
+
+
+ 
+{% endblock %}

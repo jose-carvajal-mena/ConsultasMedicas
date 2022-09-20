@@ -1,0 +1,70 @@
+{% extends './base.html' %}
+{% block title %}Editar Medico{% endblock %}
+
+{% block body %}
+<div class="card">
+<div class="card-header">
+<h3>Editando Medico</h3>
+</div>
+<div class="card-body">
+<form action="/actualizar-medico" method="POST">
+    {% for dato in datos %}
+    <div class="row">
+      <div class="col">
+          <div class="form-group">
+              <label for="run" class="col-form-label">R.U.N</label>
+              <input type="text" class="form-control" id="run" name="run" value="{{ dato[0] }}">
+          </div>
+      </div>
+      <div class="col">
+          <div class="form-group">
+              <label for="nombre" class="col-form-label">NOMBRE</label>
+              <input type="text" class="form-control" id="nombre" name="nombre" value="{{ dato[1] }}">
+          </div>
+      </div>
+     </div>
+      <div class="row">
+          <div class="col">
+              <div class="form-group">
+                  <label for="paterno" class="col-form-label">APELLIDO PATERNO</label>
+                  <input type="text" class="form-control" id="paterno" name="paterno" value="{{ dato[2] }}">
+              </div>
+          </div>
+          <div class="col">
+              <div class="form-group">
+                  <label for="materno" class="col-form-label">APELLIDO MATERNO</label>
+                  <input type="text" class="form-control" id="materno" name="materno" value="{{ dato[3] }}">
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col">
+              <div class="form-group">
+                  <label for="especialidad" class="col-form-label">ESPECIALIDAD</label><br>
+                  <select id="especialidad" class="datos" name="especialidad" style="width:200px;">
+                      {% for especialidad in especialidades %}
+                            {% if especialidad[0] != dato[4] %}
+                            <option value="{{ especialidad[0] }}">
+                                {{ especialidad[1] }}
+                            </option>
+                            {% else %}
+                            <option value="{{ especialidad[0] }}" selected>
+                                {{ especialidad[1] }}
+                            </option>
+                            {% endif %}
+                       {% endfor %}
+                    </select>
+              </div>
+          </div>
+      </div>
+  
+      {% endfor %}
+</div>
+<div class="card-footer">
+  <a href="/medicos" class="btn btn-danger">Cancelar</a>
+  <button type="submit" class="btn btn-primary">Guardar</button>
+</div>
+
+</form>
+</div>
+{% endblock %}

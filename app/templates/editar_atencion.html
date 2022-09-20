@@ -1,0 +1,87 @@
+{% extends './base.html' %}
+{% block title %}Editar Atencion{% endblock %}
+
+{% block body %}
+
+<div class="card">
+    <div class="card-header">
+        <h3>Editar Atencion</h3>
+    </div>
+<div class="card-body">
+<form action="/actualizar-atencion" method="POST">
+    {% for atencion in atenciones %}
+    <input type="hidden" name="id_atencion" value="{{atencion[0]}}">
+    <div class="row">
+      <div class="col">
+          <div class="form-group">
+              <label for="rut" class="col-form-label">R.U.N</label>
+              <p class="font-weight-bold">{{ atencion[2] }}</p>
+              <input type="hidden" class="form-control" id="rut" name="rut" value="{{ atencion[2] }}" >
+          </div>
+      </div>
+     </div>
+      <div class="row">
+         
+          <div class="col-3">
+              <div class="form-group">
+                  <label for="materno" class="col-form-label">FECHA</label>
+                  <input type="date" class="form-control" value="{{ atencion[3] }}" name="fecha">
+              </div>
+          </div>
+          <div class="col-2">
+              <div class="form-group">
+                  <label for="materno" class="col-form-label">HORA</label>
+                  <input type="time"  class="form-control" value="{{ atencion[4] }}" name="hora">
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-3">
+              <div class="form-group">
+                  <label for="id_consulta" class="col-form-label">N° CONSULTA</label><br>
+                  <select id="consultas" class="datos" name="id_consulta" style="width:200px;">
+                    {% for consulta in consultas %}
+                          {% if consulta[0] != atencion[1] %}
+                          <option value="{{ consulta[0] }}">
+                              {{ consulta[0] }}
+                          </option>
+                          {% else %}
+                          <option value="{{ consulta[0] }}" selected>
+                              {{ consulta[0] }}
+                          </option>
+                          {% endif %}
+                     {% endfor %}
+                  </select>
+              </div>
+           </div>
+          <div class="col-3">
+            <label for="validationServerUsername">VALOR CONSULTA</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupPrepend3">$</span>
+              </div>
+              <input type="text" class="form-control" name="valor" id="valor" aria-describedby="inputGroupPrepend3" value="{{atencion[5]}}">
+          </div>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="observacion" class="col-form-label">OBSERVACION</label><br>
+                    <textarea class="form-control" id="observacion" rows="3" name="observacion"></textarea>
+                </div>
+            </div>
+        </div>
+    
+  
+      {% endfor %}
+    </div>
+<div class="card-footer">
+  <a href="/atenciones" class="btn btn-danger">Cancelar</a>
+  <button type="submit" class="btn btn-primary">Guardar</button>
+</div>
+
+</form>
+
+</div>
+{% endblock %}

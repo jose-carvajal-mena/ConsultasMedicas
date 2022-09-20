@@ -1,0 +1,32 @@
+.card{
+    width: 100%;
+}
+
+.letra{
+    height: 40px;
+    width: 40px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-top:15px;
+
+}
+
+.titulo{
+    height: 50px;
+}
+
+.container-fluid .row a:hover{
+    text-decoration: none;
+    color:white;
+}
+
+.container-fluid .row a{
+    text-decoration: none;
+    color:black;
+}
+
+.container-fluid .row a:link{
+    text-decoration: none;
+    color:white;
+}

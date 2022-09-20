@@ -1,0 +1,141 @@
+{% extends './base.html' %}
+{% block title %} Pacientes {% endblock %}
+
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <h3>
+          Pacientes
+          <button type="button" data-toggle="modal" data-target="#nuevoPaciente" class="btn btn-primary float-right"><i class="fa-solid fa-plus"></i> Nuevo</button>
+        </h3>
+       </div>
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">R.U.N</th>
+        <th scope="col">NOMBRE</th>
+        <th scope="col">APELLIDO PATERNO</th>
+        <th scope="col">APELLIDO MATERNO</th>
+        <th scope="col">EDAD</th>
+        <th scope="col">PESO</th>
+        <th scope="col">ESTATURA</th>
+        <th scope="col">OPCIONES</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for paciente in pacientes %}
+      {% if paciente[11] == 1 %}
+        <tr>
+          <td>{{ paciente[0] }}</td>
+          <td>{{ paciente[1] | capitalize}}</td>
+          <td>{{ paciente[2] | capitalize}}</td>
+          <td>{{ paciente[3] | capitalize}}</td>
+          <td>{{ paciente[4] }} años</td>
+          <td>{{ paciente[5] }} kg</td>
+          <td>{{ paciente[6] }} m</td>
+          <td colspan="2">
+            <a href="/editar-paciente/{{ paciente[0] }}" class="btn btn-success text-light" ><i class="fa-solid fa-pen"></i></a>
+            <a href="/eliminar-paciente/{{ paciente[0] }}" class="btn btn-danger text-light"><i class="fa-solid fa-trash"></i></a>
+        </td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+      
+    </tbody>
+  </table>
+</div>
+
+<div class="modal fade" id="nuevoPaciente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-hospital-user"></i> Nuevo Paciente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/guardar-paciente" method="POST">
+          <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="run" class="col-form-label">R.U.N</label>
+                    <input type="text" class="form-control" id="run" name="run" required>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="nombre" class="col-form-label">NOMBRE</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+            </div>
+           </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="paterno" class="col-form-label">APELLIDO PATERNO</label>
+                        <input type="text" class="form-control" id="paterno" name="paterno" required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="materno" class="col-form-label">APELLIDO MATERNO</label>
+                        <input type="text" class="form-control" id="materno" name="materno" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="edad" class="col-form-label">EDAD</label><br>
+                        <input type="text" class="form-control" id="edad" name="edad" required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="peso" class="col-form-label">PESO (KG)</label><br>
+                        <input type="number" step="0.01" class="form-control" id="peso" name="peso">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="estatura" class="col-form-label">ESTATURA</label><br>
+                        <input type="number" step="0.01"class="form-control" id="estatura" name="estatura">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="fuma" class="col-form-label">FUMADOR</label><br>
+                        
+                              SI <input type="radio" value="1" name="fumador" id="si">
+                              
+                              NO <input type="radio" value="0" name="fumador" id="no" checked>
+                            
+                          <input type="text" name="tiempo" value="0" class="form-control" id="tiempo" placeholder="años" disabled>
+                        </div>
+                </div>
+              
+                <div class="col">
+                    <div class="form-group">
+                        <label for="dieta" class="col-form-label">DIETA ASIGNADA</label><br>
+                        SI <input type="radio" value="1"  id="dieta" name="dieta" >
+                        NO <input type="radio" value="0"  id="dieta" name="dieta" checked>
+                    </div>
+                </div>
+            </div>
+        
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+ 
+{% endblock%}
+

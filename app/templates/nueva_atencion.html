@@ -1,0 +1,100 @@
+{% extends './base.html' %}
+{% block title %}Nueva Recepcion{% endblock %}
+
+{% block body %}
+
+<div class="card">
+    <div class="card-header">
+        <h3>Recepcionar Paciente</h3>
+    </div>
+<div class="card-body">
+<form action="/guardar-atencion" method="POST">
+
+    {% for paciente in pacientes %}
+    <div class="row">
+      <div class="col">
+          <div class="form-group">
+              <label for="rut" class="col-form-label">R.U.N</label>
+              <p class="font-weight-bold">{{ paciente[0] }}</p>
+              <input type="hidden" class="form-control" id="rut" name="rut" value="{{ paciente[0] }}" >
+          </div>
+      </div>
+      <div class="col">
+          <div class="form-group">
+              <label for="nombre" class="col-form-label">NOMBRE</label>
+              <p class="font-weight-bold">{{ paciente[1] | capitalize }}</p>
+          </div>
+      </div>
+     </div>
+      <div class="row">
+          <div class="col">
+              <div class="form-group">
+                  <label for="paterno" class="col-form-label">APELLIDO PATERNO</label>
+                  <p class="font-weight-bold">{{ paciente[2] | capitalize}}</p>
+              </div>
+          </div>
+          <div class="col">
+              <div class="form-group">
+                  <label for="materno" class="col-form-label">APELLIDO MATERNO</label>
+                  <p class="font-weight-bold">{{ paciente[3] | capitalize}}</p>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-3">
+              <div class="form-group">
+                  <label for="id_consulta" class="col-form-label">N° CONSULTA</label><br>
+                    <p class="font-weight-bold">{{ id_consulta }}</p> 
+                    <input type="hidden" value="{{ id_consulta }}" name="id_consulta"> 
+              </div>
+           </div>
+          <div class="col-3">
+              <div class="form-group">
+                  <label for="tipo_consulta" class="col-form-label">ESPECIALIDAD</label><br>
+                  
+                  <p class="font-weight-bold">
+                    {% if tipo_consulta == 1 %}
+                    CGI (Consulta General Integral)
+                    {% elif tipo_consulta == 2 %}
+                    Urgencia
+                    {% elif tipo_consulta == 3 %}
+                    Pediatria
+                    {% endif %}
+
+                  </p>
+              </div>
+           </div>
+          <div class="col-3">
+            <label for="validationServerUsername">VALOR CONSULTA</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupPrepend3">$</span>
+              </div>
+              <input type="text" class="form-control" class="form-control" name="valor" id="valor" aria-describedby="inputGroupPrepend3" required>
+            </div>
+        </div>
+          <div class="col-3">
+             <input type="hidden" value="{{ prioridad }}" name="prioridad">
+        </div>
+    </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="observacion" class="col-form-label">OBSERVACION</label><br>
+                    <textarea class="form-control" id="observacion" rows="3" name="observacion"></textarea>
+                </div>
+            </div>
+        </div>
+    
+  
+      {% endfor %}
+    </div>
+<div class="card-footer">
+  <a href="/atenciones" class="btn btn-danger">Cancelar</a>
+  <button type="submit" class="btn btn-primary">Guardar</button>
+</div>
+
+</form>
+
+</div>
+{% endblock %}

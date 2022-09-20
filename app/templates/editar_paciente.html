@@ -1,0 +1,96 @@
+{% extends './base.html' %}
+{% block title %}Editar Paciente{% endblock %}
+
+{% block body %}
+<div class="card">
+<div class="card-header">
+<h3>Editando Paciente</h3>
+</div>
+<div class="card-body">
+<form action="/actualizar-paciente" method="POST">
+    {% for dato in datos %}
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="run" class="col-form-label">R.U.N</label>
+                <input type="text" class="form-control" id="run" name="run" value="{{dato[0]}}">
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="nombre" class="col-form-label">NOMBRE</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" value="{{dato[1]}}">
+            </div>
+        </div>
+       </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="paterno" class="col-form-label">APELLIDO PATERNO</label>
+                    <input type="text" class="form-control" id="paterno" name="paterno" value="{{dato[2]}}">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="materno" class="col-form-label">APELLIDO MATERNO</label>
+                    <input type="text" class="form-control" id="materno" name="materno" value="{{dato[3]}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <div class="form-group">
+                    <label for="edad" class="col-form-label">EDAD</label><br>
+                    <input type="text" class="form-control" id="edad" name="edad" value="{{dato[4]}}">
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <label for="peso" class="col-form-label">PESO (KG)</label><br>
+                    <input type="number" step="0.01" class="form-control" id="peso" name="peso" value="{{dato[5]}}">
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <label for="estatura" class="col-form-label">ESTATURA</label><br>
+                    <input type="number" step="0.01"class="form-control" id="estatura" name="estatura" value="{{dato[6]}}">
+                </div>
+            </div>
+        
+        
+            <div class="col-2">
+                <div class="form-group">
+                    <label for="fuma" class="col-form-label">FUMADOR</label><br>
+                    <input type="text" name="tiempo" class="form-control" id="tiempo" placeholder="años" value="{{dato[8]}}">
+                    
+                        {% if dato[7] == 1 %}
+                          SI <input type="radio" value="1" name="fumador" id="si" checked>
+                        {% elif dato[7] == 0 %} 
+                          NO <input type="radio" value="0" name="fumador" id="no" checked>
+                        {% endif %}
+                     </div>
+            </div>
+          
+            <div class="col">
+                <div class="form-group">
+                    <label for="dieta" class="col-form-label">DIETA ASIGNADA</label><br>
+                    {% if dato[9] == 1 %}
+                    SI <input type="radio" value="1"  id="dieta" name="dieta" 
+                    checked>
+                    {% elif dato[9] == 0 %} 
+                    NO <input type="radio" value="0"  id="dieta" name="dieta" checked>
+                    {% endif %}
+                </div>
+            </div>
+            </div>
+        
+        </div>
+        {% endfor %}
+<div class="card-footer">
+  <a  href="/pacientes" class="btn btn-danger">Cancelar</a>
+  <button type="submit" class="btn btn-primary">Guardar</button>
+</div>
+
+</form>
+</div>
+{% endblock %}

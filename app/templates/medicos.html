@@ -1,0 +1,111 @@
+{% extends './base.html' %}
+{% block title %} Medicos {% endblock %}
+
+
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <h3>Medicos
+          <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" class="btn btn-primary float-right"><i class="fa-solid fa-plus"></i> Nuevo</button>
+        </h3>
+    </div>
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">R.U.N</th>
+        <th scope="col">NOMBRE</th>
+        <th scope="col">APELLIDO PATERNO</th>
+        <th scope="col">APELLIDO MATERNO</th>
+        <th scope="col">ESPECIALIDAD</th>
+        <th scope="col">OPCIONES</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for medico in medicos %}
+      {% if medico[5] == 1 %}
+        <tr>
+          <td>{{ medico[0] }}</td>
+          <td>{{ medico[1] | capitalize}}</td>
+          <td>{{ medico[2] | capitalize}}</td>
+          <td>{{ medico[3] | capitalize}}</td>
+          {% for especialidad in especialidades %}
+              {% if especialidad[0] == medico[6] %}
+              <td>{{ especialidad[1] }}</td>
+              {% endif %}
+          {% endfor %}
+          <td colspan="2">
+            <a href="/editar-medico/{{ medico[0] }}" class="btn btn-success text-light" ><i class="fa-solid fa-pen"></i></a>
+            <a href="/eliminar-medico/{{ medico[0] }}" class="btn btn-danger text-light"><i class="fa-solid fa-trash"></i></a>
+        </td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+      
+    </tbody>
+  </table>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-user-doctor fa-x4"></i> Nuevo Medico</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/guardar-medico" method="POST">
+          <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="run" class="col-form-label">R.U.N</label>
+                    <input type="text" class="form-control" id="run" name="run">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="nombre" class="col-form-label">NOMBRE</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre">
+                </div>
+            </div>
+           </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="paterno" class="col-form-label">APELLIDO PATERNO</label>
+                        <input type="text" class="form-control" id="paterno" name="paterno">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="materno" class="col-form-label">APELLIDO MATERNO</label>
+                        <input type="text" class="form-control" id="materno" name="materno">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="especialidad" class="col-form-label">ESPECIALIDAD</label><br>
+                        <select id="especialidad" class="datos" name="especialidad" style="width:200px;">
+                            {% for especialidad in especialidades %}
+                                <option value="{{ especialidad[0] }}">{{ especialidad[1] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+ 
+{% endblock%}
